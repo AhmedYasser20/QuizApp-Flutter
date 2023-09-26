@@ -62,37 +62,54 @@ class _QuestionScreenState extends State<QuestionScreen> {
         child: Center(child: Container(
           padding: EdgeInsets.all(20),
           width: width*0.7,
-          height: height*0.8,
+          height: height*0.6,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: Color.fromARGB(255, 224, 196, 234)
           ),
-          child: Column(children: [
-          Text("${tempbank[indexQuestion]['question']}",style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-          SizedBox(height: 10,),
-          Container(
-            width: width*0.6*0.8,
-            height: height*0.8*0.5,
-            child: ListView.builder(
-            itemCount: tempbank[indexQuestion]['answers'].length,
-            itemBuilder: (context, tempindex) => ListTile(
-                onTap: () {
-                 setState(() {
-                    if(tempbank[indexQuestion]['answers'][tempindex]['score']==1){
-                      score++;
-                    }
-                    if(indexQuestion<tempbank.length-1){
-                    indexQuestion++;
-                    }
-                    else{
-                      Navigator.pushNamed(context, 'scoreScreen',arguments: [score,tempbank.length,userName]);
-                    }
-                  });
-                },
-                title:Text(tempbank[indexQuestion]['answers'][tempindex]['ans']),)
-              ),
+          child: SingleChildScrollView(
+            child: Column(children: [
+            Text("${tempbank[indexQuestion]['question']}",style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+            SizedBox(height: 15,),
+            Container(
+              width: width*0.6*0.8,
+              height: height*0.8*0.5,
+              child: ListView.builder(
+              itemCount: tempbank[indexQuestion]['answers'].length,
+              itemBuilder: (context, tempindex) => ListTile(
+                  onTap: () {
+                   setState(() {
+                      if(tempbank[indexQuestion]['answers'][tempindex]['score']==1){
+                        score++;
+                      }
+                      if(indexQuestion<tempbank.length-1){
+                      indexQuestion++;
+                      }
+                      else{
+                        Navigator.pushNamed(context, 'scoreScreen',arguments: [score,tempbank.length,userName]);
+                      }
+                    });
+                  },
+                  title:Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(188, 88, 12, 88),
+                      borderRadius: BorderRadius.circular(5)
+                    ),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(tempbank[indexQuestion]['answers'][tempindex]['ans'],style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white
+                        ),),
+                      ),
+                    ),
+                  ),)
+                ),
+            ),
+            ]),
           ),
-          ]),
         ),),
       ),
     );
